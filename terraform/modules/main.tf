@@ -1,5 +1,5 @@
 resource "azurerm_application_insights" "this" {
-  name                = "${var.project_name}-${var.environment}-appi"
+  name                = "${var.name_prefix}-appi"
   location            = module.resource_group.location
   resource_group_name = module.resource_group.name
   application_type    = "web"
@@ -7,36 +7,39 @@ resource "azurerm_application_insights" "this" {
 
 module "resource_group" {
   source   = "./modules/resource_group"
-  name     = "${var.project_name}-${var.environment}-rg"
+  name     = "${var.name_prefix}-rg"
   location = var.location
 }
 
 module "storage" {
   source = "./modules/storage"
-
+  storage_account_name = lower(replace("${var.name_prefix}sa", "-", ""))
+  location            = var.location
   resource_group_name = module.resource_group.name
-  location            = module.resource_group.location
-  storage_account_name = lower(replace("${var.project_name}${var.environment}sa", "-", ""))
   queue_name = "provisioning-requests"
 }
 
 module "function_app" {
   source = "./modules/function_app"
-
+  function_app_name = "${var.name_prefix}-fn"
   resource_group_name = module.resource_group.name
-  location            = module.resource_group.location
-
-  function_app_name = "${var.project_name}-${var.environment}-fn"
-
+  location            = var.location
   storage_account_name             = module.storage.storage_account_name
   app_insights_connection_string   = azurerm_application_insights.this.connection_string
 }
 
 module "automation_account" {
   source              = "./modules/automation_account"
-  name_prefix         = var.name_prefix
+  automation_account_name = "${var.name_prefix}-aa"
   location            = var.location
   resource_group_name = module.resource_group.name
-  tags                = var.tags
 }
+
+module "automation_account" {
+  source              = "./modules/monitoring"
+  analytics_name      = "${var.name_prefix}-law"
+  location            = var.location
+  resource_group_name = module.resource_group.name
+}
+
 

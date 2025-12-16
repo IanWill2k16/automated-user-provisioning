@@ -14,3 +14,7 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "automation_account_name" {
+    type = string
+}

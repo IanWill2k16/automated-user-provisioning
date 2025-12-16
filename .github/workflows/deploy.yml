@@ -1,4 +1,4 @@
-name: Terraform Validate
+name: Deploy Infrastructure
 
 on:
   pull_request:
@@ -7,6 +7,7 @@ on:
 
 jobs:
   validate:
+    name: Terraform Deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,3 +23,7 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
         working-directory: terraform
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform -chdir=terraform plan
