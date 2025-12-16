@@ -29,7 +29,3 @@ variable "code_container_name" {
 variable "storage_access_key" {
   type        = string
 }
-
-variable "storage_account_id" {
-  type        = string
-}

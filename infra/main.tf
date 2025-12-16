@@ -26,7 +26,6 @@ module "function_app" {
   location            = var.location
   storage_account_name             = module.storage.storage_account_name
   app_insights_connection_string   = azurerm_application_insights.this.connection_string
-  identity_id           = module.identity.id
   storage_access_key    = module.storage.access_key
   storage_blob_endpoint = module.storage.blob_endpoint
   code_container_name   = module.storage.code_container_name
