@@ -29,6 +29,7 @@ module "function_app" {
   storage_access_key    = module.storage.access_key
   storage_blob_endpoint = module.storage.blob_endpoint
   code_container_name   = module.storage.code_container_name
+  storage_account_id    = module.storage.storage_account_id
 }
 
 module "automation_account" {
