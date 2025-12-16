@@ -26,7 +26,7 @@ resource "azurerm_function_app_flex_consumption" "this" {
   runtime_version = "3.11"
 
   app_settings = {
-    AzureWebJobsStorage                   = "DefaultEndpointsProtocol=https;AccountName=${var.storage_name};AccountKey=${var.storage_access_key};EndpointSuffix=core.windows.net"
+    AzureWebJobsStorage                   = "DefaultEndpointsProtocol=https;AccountName=${var.storage_account_name};AccountKey=${var.storage_access_key};EndpointSuffix=core.windows.net"
     FUNCTIONS_EXTENSION_VERSION           = "~4"
     APPLICATIONINSIGHTS_CONNECTION_STRING = var.app_insights_connection_string
   }
