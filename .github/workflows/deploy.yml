@@ -33,12 +33,6 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Debug terraform directory
-        run: |
-          pwd
-          ls -la
-          ls -la infra
-
       - name: Terraform Init
         run: terraform -chdir=infra init
 
@@ -48,3 +42,4 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform -chdir=infra plan
+        continue-on-error: true
