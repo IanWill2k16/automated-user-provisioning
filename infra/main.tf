@@ -12,7 +12,7 @@ module "resource_group" {
 }
 
 module "storage" {
-  source = "./modules/storage"
+  source = "./modules/storage_account"
   storage_account_name = lower(replace("${var.name_prefix}sa", "-", ""))
   location            = var.location
   resource_group_name = module.resource_group.name
@@ -35,7 +35,7 @@ module "automation_account" {
   resource_group_name = module.resource_group.name
 }
 
-module "automation_account" {
+module "analytics_account" {
   source              = "./modules/monitoring"
   analytics_name      = "${var.name_prefix}-law"
   location            = var.location
