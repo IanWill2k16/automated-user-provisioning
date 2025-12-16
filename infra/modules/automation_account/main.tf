@@ -34,13 +34,11 @@ resource "azurerm_monitor_diagnostic_setting" "automation" {
   target_resource_id         = azurerm_automation_account.this.id
   log_analytics_workspace_id = var.log_analytics_workspace_id
 
-  log {
+  enabled_log {
     category = "JobLogs"
-    enabled  = true
   }
 
-  log {
+  enabled_log {
     category = "JobStreams"
-    enabled  = true
   }
 }

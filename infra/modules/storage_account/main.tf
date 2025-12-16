@@ -12,7 +12,7 @@ resource "azurerm_storage_account" "this" {
 
 resource "azurerm_storage_container" "code" {
   name                  = "code"
-  storage_account_id    = azurerm_storage_account.sa.id
+  storage_account_id    = azurerm_storage_account.this.id
   container_access_type = "private"
 }
 
