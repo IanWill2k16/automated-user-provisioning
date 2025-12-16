@@ -1,29 +1,44 @@
 name: Deploy Infrastructure
 
 on:
-  pull_request:
   push:
-    branches: [ main ]
+    branches: ["main"]
+  pull_request:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  TF_VAR_oidc_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+  TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+  TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
 jobs:
-  validate:
-    name: Terraform Deploy
+  terraform-plan:
+    name: Terraform Plan
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: hashicorp/setup-terraform@v3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Azure Login
+        uses: azure/login@v2
         with:
-          terraform_version: 1.14.0
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Terraform Init
-        run: terraform init
-        working-directory: terraform
+        run: terraform -chdir=infra init
 
       - name: Terraform Validate
-        run: terraform validate
-        working-directory: terraform
+        run: terraform -chdir=infra validate
 
       - name: Terraform Plan
-        run: terraform plan
-        working-directory: terraform
+        id: plan
+        run: terraform -chdir=infra plan
