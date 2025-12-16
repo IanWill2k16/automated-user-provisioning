@@ -17,3 +17,19 @@ variable "storage_account_name" {
 variable "app_insights_connection_string" {
   type        = string
 }
+
+variable "storage_blob_endpoint" {
+  type        = string
+}
+
+variable "code_container_name" {
+  type        = string
+}
+
+variable "storage_access_key" {
+  type        = string
+}
+
+variable "storage_account_id" {
+  type        = string
+}

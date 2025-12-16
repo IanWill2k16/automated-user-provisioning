@@ -26,7 +26,7 @@ resource "azurerm_automation_runbook" "queue_worker" {
   log_verbose  = true
   log_progress = true
 
-  content = file("${path.module}/runbooks/process-queue.ps1")
+  content = file("${path.module}/runbooks/process_queue.ps1")
 }
 
 resource "azurerm_monitor_diagnostic_setting" "automation" {

@@ -10,6 +10,12 @@ resource "azurerm_storage_account" "this" {
   allow_nested_items_to_be_public = false
 }
 
+resource "azurerm_storage_container" "code" {
+  name                  = "code"
+  storage_account_id    = azurerm_storage_account.sa.id
+  container_access_type = "private"
+}
+
 resource "azurerm_storage_queue" "this" {
   name                 = var.queue_name
   storage_account_name = azurerm_storage_account.this.name

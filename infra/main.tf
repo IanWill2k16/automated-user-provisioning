@@ -26,6 +26,10 @@ module "function_app" {
   location            = var.location
   storage_account_name             = module.storage.storage_account_name
   app_insights_connection_string   = azurerm_application_insights.this.connection_string
+  identity_id           = module.identity.id
+  storage_access_key    = module.storage.access_key
+  storage_blob_endpoint = module.storage.blob_endpoint
+  code_container_name   = module.storage.code_container_name
 }
 
 module "automation_account" {
@@ -33,6 +37,8 @@ module "automation_account" {
   automation_account_name = "${var.name_prefix}-aa"
   location            = var.location
   resource_group_name = module.resource_group.name
+  storage_account_id  = module.storage.storage_account_id
+  log_analytics_workspace_id = module.monitoring.log_analytics_workspace_id
 }
 
 module "analytics_account" {
