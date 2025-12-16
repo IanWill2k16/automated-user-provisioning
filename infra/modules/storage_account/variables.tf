@@ -15,15 +15,15 @@ variable "queue_name" {
 }
 
 output "access_key" {
-  value = azurerm_storage_account.sa.primary_access_key
+  value = azurerm_storage_account.this.primary_access_key
 }
 
 output "id" {
-  value = azurerm_storage_account.sa.id
+  value = azurerm_storage_account.this.id
 }
 
 output "blob_endpoint" {
-  value = azurerm_storage_account.sa.primary_blob_endpoint
+  value = azurerm_storage_account.this.primary_blob_endpoint
 }
 
 output "code_container_name" {

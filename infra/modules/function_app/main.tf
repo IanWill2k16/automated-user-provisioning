@@ -37,5 +37,5 @@ resource "azurerm_function_app_flex_consumption" "this" {
 resource "azurerm_role_assignment" "queue_sender" {
   scope                = var.storage_account_id
   role_definition_name = "Storage Queue Data Contributor"
-  principal_id         = azurerm_function_app_flex_consumption.func.identity[0].principal_id
+  principal_id         = azurerm_function_app_flex_consumption.this.identity[0].principal_id
 }

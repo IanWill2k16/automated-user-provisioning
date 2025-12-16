@@ -40,7 +40,7 @@ module "automation_account" {
   log_analytics_workspace_id = module.monitoring.log_analytics_workspace_id
 }
 
-module "analytics_account" {
+module "monitoring" {
   source              = "./modules/monitoring"
   analytics_name      = "${var.name_prefix}-law"
   location            = var.location
