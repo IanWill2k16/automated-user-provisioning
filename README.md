@@ -1,1 +1,1 @@
-# automated-user-provisioning
+# Event-Driven Identity Provisioning Pipeline
