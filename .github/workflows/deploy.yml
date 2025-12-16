@@ -37,7 +37,7 @@ jobs:
         run: |
           pwd
           ls -la
-          ls -la terraform
+          ls -la infra
 
       - name: Terraform Init
         run: terraform -chdir=infra init
