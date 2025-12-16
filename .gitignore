@@ -1,0 +1,27 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform/
+.terraform.lock.hcl
+
+# Local environment files
+.env
+.env.*
+.cfg
+secrets.*
+*.pem
+
+# Editor junk
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python functions
+venv/
+__pycache__/
