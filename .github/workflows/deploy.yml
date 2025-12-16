@@ -43,3 +43,6 @@ jobs:
         id: plan
         run: terraform -chdir=infra plan
         continue-on-error: true
+      
+      - name: Terraform Apply
+        run: terraform -chdir=infra apply

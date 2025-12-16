@@ -25,3 +25,7 @@ secrets.*
 # Python functions
 venv/
 __pycache__/
+
+# Prettier
+.prettierignore
+.prettierrc
