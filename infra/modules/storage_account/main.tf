@@ -18,5 +18,5 @@ resource "azurerm_storage_container" "code" {
 
 resource "azurerm_storage_queue" "this" {
   name                 = var.queue_name
-  storage_account_name = azurerm_storage_account.this.id
+  storage_account_id = azurerm_storage_account.this.id
 }
