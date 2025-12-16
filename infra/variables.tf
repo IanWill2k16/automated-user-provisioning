@@ -8,7 +8,7 @@ variable "environment" {
   default     = "demo"
 }
 
-variable "project_name" {
+variable "name_prefix" {
   type        = string
   default     = "identity-automation"
 }
