@@ -83,8 +83,8 @@ resource "azurerm_automation_job_schedule" "queue_poll" {
   schedule_name           = azurerm_automation_schedule.queue_poll.name
 
   parameters = {
-    QueueName          = var.queue_name
-    StorageAccountName = var.storage_account_name
+    queuename          = var.queue_name
+    storageaccountname = var.storage_account_name
   }
 }
 
