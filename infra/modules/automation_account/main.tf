@@ -53,6 +53,43 @@ resource "azurerm_automation_module" "az_storage" {
   }
 }
 
+# -------------------------------------------------------------------
+# Runbook Schedule (INTENTIONALLY DISABLED)
+#
+# This schedule is commented out to avoid continuous execution costs.
+# It is left here to demonstrate how the runbook would be triggered
+# automatically in a production environment.
+#
+# Uncomment and apply to enable queue polling on a schedule.
+# -------------------------------------------------------------------
+
+resource "azurerm_automation_schedule" "queue_poll" {
+  name                    = "poll-provisioning-queue"
+  resource_group_name     = var.resource_group_name
+  automation_account_name = azurerm_automation_account.this.name
+
+  frequency = "Minute"
+  interval  = 5
+
+  timezone  = "UTC"
+
+  start_time = "2025-01-01T00:00:00Z"
+}
+
+resource "azurerm_automation_job_schedule" "queue_poll" {
+  resource_group_name     = var.resource_group_name
+  automation_account_name = azurerm_automation_account.this.name
+  runbook_name            = azurerm_automation_runbook.queue_worker.name
+  schedule_name           = azurerm_automation_schedule.queue_poll.name
+
+  parameters = {
+    QueueName          = var.queue_name
+    StorageAccountName = var.storage_account_name
+  }
+}
+
+# -------------------------------------------------------------------
+
 resource "azurerm_automation_variable_string" "queue_name" {
   name                    = "queue_name"
   resource_group_name     = azurerm_automation_account.this.resource_group_name
