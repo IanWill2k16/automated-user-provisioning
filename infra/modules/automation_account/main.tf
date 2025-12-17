@@ -63,26 +63,26 @@ resource "azurerm_automation_module" "az_storage" {
 # Uncomment and apply to enable queue polling on a schedule.
 # -------------------------------------------------------------------
 
-resource "azurerm_automation_schedule" "queue_poll" {
-  name                    = "poll-provisioning-queue"
-  resource_group_name     = var.resource_group_name
-  automation_account_name = azurerm_automation_account.this.name
+# resource "azurerm_automation_schedule" "queue_poll" {
+#   name                    = "poll-provisioning-queue"
+#   resource_group_name     = var.resource_group_name
+#   automation_account_name = azurerm_automation_account.this.name
 
-  frequency = "Hour"
-  interval  = 1
-}
+#   frequency = "Hour"
+#   interval  = 1
+# }
 
-resource "azurerm_automation_job_schedule" "queue_poll" {
-  resource_group_name     = var.resource_group_name
-  automation_account_name = azurerm_automation_account.this.name
-  runbook_name            = azurerm_automation_runbook.queue_worker.name
-  schedule_name           = azurerm_automation_schedule.queue_poll.name
+# resource "azurerm_automation_job_schedule" "queue_poll" {
+#   resource_group_name     = var.resource_group_name
+#   automation_account_name = azurerm_automation_account.this.name
+#   runbook_name            = azurerm_automation_runbook.queue_worker.name
+#   schedule_name           = azurerm_automation_schedule.queue_poll.name
 
-  parameters = {
-    queuename          = var.queue_name
-    storageaccountname = var.storage_account_name
-  }
-}
+#   parameters = {
+#     queuename          = var.queue_name
+#     storageaccountname = var.storage_account_name
+#   }
+# }
 
 # -------------------------------------------------------------------
 
