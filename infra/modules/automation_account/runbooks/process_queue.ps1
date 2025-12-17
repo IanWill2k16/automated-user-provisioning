@@ -1,20 +1,17 @@
-param (
-    [Parameter(Mandatory)]
-    [string]$QueueName,
+Write-Output "Authenticating using Managed Identity..."
+Connect-AzAccount -Identity
 
-    [Parameter(Mandatory)]
-    [string]$StorageAccountName
-)
+$queueName          = Get-AutomationVariable -Name "queue_name"
+$storageAccountName = Get-AutomationVariable -Name "storage_account_name"
 
-Write-Output "Authenticating to Azure using Managed Identity..."
-Connect-AzAccount -Identity -ErrorAction Stop
+Write-Output "Creating storage context via RBAC..."
+$ctx = New-AzStorageContext `
+    -StorageAccountName $storageAccountName `
+    -UseConnectedAccount
 
-$storageAccount = Get-AzStorageAccount -Name $StorageAccountName -ErrorAction Stop
-$ctx = $storageAccount.Context
-
-Write-Output "Polling queue '$QueueName' for messages..."
+Write-Output "Polling queue '$queueName' for messages..."
 $messages = Get-AzStorageQueueMessage `
-    -Queue $QueueName `
+    -Queue $queueName `
     -Context $ctx `
     -MaxMessageCount 1
 

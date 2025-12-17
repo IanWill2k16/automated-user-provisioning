@@ -42,3 +42,27 @@ resource "azurerm_monitor_diagnostic_setting" "automation" {
     category = "JobStreams"
   }
 }
+
+resource "azurerm_automation_module" "az_storage" {
+  name                    = "Az.Storage"
+  resource_group_name     = azurerm_automation_account.this.resource_group_name
+  automation_account_name = azurerm_automation_account.this.name
+
+  module_link {
+    uri = "https://www.powershellgallery.com/api/v2/package/Az.Storage/9.4.0"
+  }
+}
+
+resource "azurerm_automation_variable_string" "queue_name" {
+  name                    = "queue_name"
+  resource_group_name     = azurerm_automation_account.this.resource_group_name
+  automation_account_name = azurerm_automation_account.this.name
+  value                   = var.queue_name
+}
+
+resource "azurerm_automation_variable_string" "storage_account_name" {
+  name                    = "storage_account_name"
+  resource_group_name     = azurerm_automation_account.this.resource_group_name
+  automation_account_name = azurerm_automation_account.this.name
+  value                   = var.storage_account_name
+}

@@ -40,6 +40,8 @@ module "automation_account" {
   resource_group_name = module.resource_group.name
   storage_account_id  = module.storage.storage_account_id
   log_analytics_workspace_id = module.monitoring.log_analytics_workspace_id
+  queue_name          = module.storage.queue_name
+  storage_account_name = module.storage.storage_account_name
 }
 
 module "monitoring" {

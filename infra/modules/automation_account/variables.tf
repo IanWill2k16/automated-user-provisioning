@@ -22,3 +22,11 @@ variable "storage_account_id" {
 variable "log_analytics_workspace_id" {
     type = string
 }
+
+variable "queue_name" {
+  type = string
+}
+
+variable "storage_account_name" {
+  type = string
+}
