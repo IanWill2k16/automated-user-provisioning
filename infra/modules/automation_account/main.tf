@@ -70,10 +70,6 @@ resource "azurerm_automation_schedule" "queue_poll" {
 
   frequency = "Hour"
   interval  = 1
-
-  timezone  = "UTC"
-
-  start_time = "2025-01-01T00:00:00Z"
 }
 
 resource "azurerm_automation_job_schedule" "queue_poll" {
