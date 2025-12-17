@@ -29,6 +29,8 @@ resource "azurerm_function_app_flex_consumption" "this" {
     AzureWebJobsStorage                   = "DefaultEndpointsProtocol=https;AccountName=${var.storage_account_name};AccountKey=${var.storage_access_key};EndpointSuffix=core.windows.net"
     FUNCTIONS_EXTENSION_VERSION           = "~4"
     APPLICATIONINSIGHTS_CONNECTION_STRING = var.app_insights_connection_string
+    QUEUE_NAME = var.queue_name
+    STORAGE_ACCOUNT_URL = "https://${var.storage_account_name}.queue.core.windows.net"
   }
 
   site_config {}

@@ -30,6 +30,7 @@ module "function_app" {
   storage_blob_endpoint = module.storage.blob_endpoint
   code_container_name   = module.storage.code_container_name
   storage_account_id    = module.storage.storage_account_id
+  queue_name            = module.storage.queue_name
 }
 
 module "automation_account" {
