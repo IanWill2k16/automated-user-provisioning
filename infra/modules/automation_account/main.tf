@@ -22,7 +22,7 @@ resource "azurerm_automation_runbook" "queue_worker" {
   resource_group_name     = var.resource_group_name
   automation_account_name = azurerm_automation_account.this.name
 
-  runbook_type = "PowerShell"
+  runbook_type = "PowerShell7"
   log_verbose  = true
   log_progress = true
 
