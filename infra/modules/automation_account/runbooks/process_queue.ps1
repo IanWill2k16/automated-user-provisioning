@@ -9,28 +9,28 @@ $ctx = New-AzStorageContext `
     -StorageAccountName $storageAccountName `
     -UseConnectedAccount
 
-Write-Output "Polling queue '$queueName' for messages..."
-$messages = Get-AzStorageQueueMessage `
-    -Queue $queueName `
-    -Context $ctx `
-    -MaxMessageCount 1
+$queue = Get-AzStorageQueue -Name $queueName -Context $ctx
 
-if (-not $messages) {
+Write-Output "Polling queue '$queueName' for messages..."
+$message = $queue.QueueClient.ReceiveMessage()
+
+if (-not $message) {
     Write-Output "No messages found. Exiting runbook."
     return
 }
 
-$message = $messages[0]
+$base64Message = $message.value.messageText
+$messageText = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($base64Message))
 
 try {
-    $payload = $message.MessageText | ConvertFrom-Json
+    $payload = $messageText | ConvertFrom-Json
 }
 catch {
     Write-Error "Failed to parse queue message JSON. Abandoning message."
     return
 }
 
-$requiredFields = @("ticketId", "userPrincipalName", "displayName")
+$requiredFields = @("requestId", "userPrincipalName", "displayName")
 $missingFields = $requiredFields | Where-Object { -not $payload.PSObject.Properties.Name.Contains($_) }
 
 if ($missingFields) {
@@ -38,7 +38,7 @@ if ($missingFields) {
     return
 }
 
-Write-Output "Processing ticket [$($payload.ticketId)]"
+Write-Output "Processing ticket [$($payload.requestId)]"
 Write-Output "Target UPN: $($payload.userPrincipalName)"
 Write-Output "Display Name: $($payload.displayName)"
 
@@ -57,13 +57,9 @@ catch {
 }
 
 Write-Output "Posting result back to Jira (simulated)"
-Write-Output "Ticket: $($payload.ticketId)"
+Write-Output "Ticket: $($payload.requestId)"
 Write-Output "Result: $provisioningResult"
 
-Remove-AzStorageQueueMessage `
-    -Queue $QueueName `
-    -Context $ctx `
-    -MessageId $message.MessageId `
-    -PopReceipt $message.PopReceipt
+$queue.QueueClient.DeleteMessage($message.Value.MessageId, $message.Value.PopReceipt)
 
 Write-Output "Message processed and removed from queue successfully."
