@@ -22,7 +22,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             status_code=400
         )
 
-    required_fields = ["ticketId", "userPrincipalName", "displayName"]
+    required_fields = ["requesttId", "userPrincipalName", "displayName"]
     missing = [f for f in required_fields if f not in payload]
 
     if missing:
@@ -43,13 +43,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     logging.info(
         "Request enqueued for ticket %s",
-        payload["ticketId"]
+        payload["requestId"]
     )
 
     return func.HttpResponse(
         json.dumps({
             "status": "accepted",
-            "ticketId": payload["ticketId"]
+            "requestId": payload["requestId"]
         }),
         status_code=202,
         mimetype="application/json"

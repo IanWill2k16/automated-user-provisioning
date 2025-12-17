@@ -38,9 +38,11 @@ if ($missingFields) {
     return
 }
 
-Write-Output "Processing ticket [$($payload.requestId)]"
-Write-Output "Target UPN: $($payload.userPrincipalName)"
-Write-Output "Display Name: $($payload.displayName)"
+Write-Output "=== Provisioning Request ==="
+Write-Output "Request ID : $($payload.requestId)"
+Write-Output "UPN        : $($payload.userPrincipalName)"
+Write-Output "Display    : $($payload.displayName)"
+Write-Output "============================"
 
 try {
     Write-Output "Starting user provisioning operation..."
