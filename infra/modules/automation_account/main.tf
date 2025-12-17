@@ -68,8 +68,8 @@ resource "azurerm_automation_schedule" "queue_poll" {
   resource_group_name     = var.resource_group_name
   automation_account_name = azurerm_automation_account.this.name
 
-  frequency = "Minute"
-  interval  = 5
+  frequency = "Hour"
+  interval  = 1
 
   timezone  = "UTC"
 
