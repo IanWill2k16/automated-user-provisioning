@@ -19,12 +19,22 @@ if (-not $message) {
     return
 }
 
+$messageText = $message.value.messageText
+
 try {
-    $payload = $messageText.value.messageText | ConvertFrom-Json
+    $decoded = [System.Text.Encoding]::UTF8.GetString(
+        [System.Convert]::FromBase64String($messageText)
+    )
+    $payload = $decoded | ConvertFrom-Json
 }
 catch {
-    Write-Error "Failed to parse queue message JSON. Abandoning message."
-    return
+    try {
+        $payload = $messageText | ConvertFrom-Json
+    }
+    catch {
+        Write-Error "Failed to parse queue message JSON. Abandoning message."
+        return
+    }
 }
 
 $requiredFields = @("requestId", "userPrincipalName", "displayName")
