@@ -19,11 +19,8 @@ if (-not $message) {
     return
 }
 
-$base64Message = $message.value.messageText
-$messageText = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($base64Message))
-
 try {
-    $payload = $messageText | ConvertFrom-Json
+    $payload = $messageText.value.messageText | ConvertFrom-Json
 }
 catch {
     Write-Error "Failed to parse queue message JSON. Abandoning message."
