@@ -22,7 +22,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             status_code=400
         )
 
-    required_fields = ["requesttId", "userPrincipalName", "displayName"]
+    required_fields = ["requestId", "userPrincipalName", "displayName"]
     missing = [f for f in required_fields if f not in payload]
 
     if missing:
