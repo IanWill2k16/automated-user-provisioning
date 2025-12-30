@@ -7,7 +7,7 @@
 This project demonstrates an event-driven identity provisioning platform built on Azure. It ingests an HR-style webhook request, queues the request for reliable processing, and executes user provisioning logic using managed identities and infrastructure-as-code.
 
 
-The design emphasizes loose coupling, least-privilege access, and operational safety while remaining simple enough to reason about and extend.
+The design emphasizes loose coupling, least-privilege access, and operational safety while remaining simple enough to reason about and extend. By separating request intake from execution, the system avoids tight coupling to upstream systems and allows retries, throttling, and future producers without redesign.
 
 
 ---
